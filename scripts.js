@@ -1,3 +1,6 @@
+let playerScore = 0;
+let npcScore = 0;
+
 function getComputerChoice(){
     let x = Math.random();
     if(x <= 0.33){
@@ -10,21 +13,65 @@ function getComputerChoice(){
 
 function result(pc){
     let npc = getComputerChoice();
+    let results = document.querySelector('#results');
     
-    if(pc == npc){console.log("It's a draw");
+    if(pc == npc){results.textContent += 'The game is a draw.';
+                results.appendChild(document.createElement("br"));
     return;} 
 
-    if (pc == "rock"){
-        if(npc == "paper"){console.log("You've lost");}
-        else {console.log("You've won");}
-    }else if (pc == "paper"){
-        if(npc =="scissors"){console.log("You've lost");}
-        else {console.log("You've won");}
-    }else if (pc == 'scissors'){
-        if(npc == "rock"){console.log("You've lost");}
-        else {console.log("You've won");}
+    if (pc == "Rock"){
+        if(npc == "paper"){results.textContent += 'You have lost the round.';
+        results.appendChild(document.createElement("br"));
+        npcScore +=1;}
+        else {results.textContent += 'You have won the round.';
+        results.appendChild(document.createElement("br"));
+        playerScore +=1;}
+    }else if (pc == "Paper"){
+        if(npc =="scissors"){results.textContent += 'You have lost the round.';
+        results.appendChild(document.createElement("br"));
+        npcScore +=1;;}
+        else {results.textContent += 'You have won the round.';
+        results.appendChild(document.createElement("br"));
+        playerScore +=1;}
+    }else if (pc == 'Scissors'){
+        if(npc == "rock"){results.textContent += 'You have lost the round.';
+        results.appendChild(document.createElement("br"));
+        npcScore +=1;;}
+        else {results.textContent += 'You have won the round.';
+        results.appendChild(document.createElement("br"));
+        playerScore +=1;}
     }else {console.log("Invalid Choice")}
+
+
+    determineWinner();
+    displayScore();
 }
 
-let playerChoice = prompt("Please enter your choice.", "rock").toLowerCase();
-result(playerChoice);
+function displayScore(){
+    document.querySelector('#playerScore').textContent = playerScore;
+    document.querySelector('#npcScore').textContent = npcScore;
+}
+
+function determineWinner(){
+    if(playerScore >= 5){
+        results.textContent += 'You have won the match!';
+        results.appendChild(document.createElement("br"));
+        npcScore = 0;
+        playerScore = 0;
+    }
+    else if(npcScore >=5 ){
+        results.textContent += 'You have lost the match!\n';
+        results.appendChild(document.createElement("br"));
+        npcScore = 0;
+        playerScore = 0;
+    }
+}
+window.addEventListener('DOMContentLoaded', ()=> {
+    let buttons = document.querySelectorAll('button');
+    buttons.forEach( (value)=> {
+       let choice = value.textContent;
+       value.addEventListener("click", () =>{
+            result(choice);
+       });
+    })
+})
