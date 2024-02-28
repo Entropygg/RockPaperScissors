@@ -13,37 +13,40 @@ function getComputerChoice(){
 
 function result(pc){
     let npc = getComputerChoice();
-    let results = document.querySelector('#results');
+    pc = pc.toLowerCase();
+    document.querySelector('#npcChoice').textContent = npc;
+    let resultsContainer = document.querySelector('#results');
+    let results = document.createElement('div');
     
-    if(pc == npc){results.textContent += 'The game is a draw.';
-                results.appendChild(document.createElement("br"));
+    if(pc == npc){results.textContent = 'The game is a draw.';
+                resultsContainer.appendChild(results);
     return;} 
 
-    if (pc == "Rock"){
-        if(npc == "paper"){results.textContent += 'You have lost the round.';
-        results.appendChild(document.createElement("br"));
+    if (pc == "rock"){
+        if(npc == "paper"){results.textContent = 'You have lost the round.';
+        resultsContainer.appendChild(results);
         npcScore +=1;}
-        else {results.textContent += 'You have won the round.';
-        results.appendChild(document.createElement("br"));
+        else {results.textContent = 'You have won the round.';
+        resultsContainer.appendChild(results);
         playerScore +=1;}
-    }else if (pc == "Paper"){
-        if(npc =="scissors"){results.textContent += 'You have lost the round.';
-        results.appendChild(document.createElement("br"));
+    }else if (pc == "paper"){
+        if(npc =="scissors"){results.textContent = 'You have lost the round.';
+        resultsContainer.appendChild(results);
+        npcScore +=1;}
+        else {results.textContent = 'You have won the round.';
+        resultsContainer.appendChild(results);
+        playerScore +=1;}
+    }else if (pc == 'scissors'){
+        if(npc == "rock"){results.textContent = 'You have lost the round.';
+        resultsContainer.appendChild(results);;
         npcScore +=1;;}
-        else {results.textContent += 'You have won the round.';
-        results.appendChild(document.createElement("br"));
+        else {results.textContent = 'You have won the round.';
+        resultsContainer.appendChild(results);
         playerScore +=1;}
-    }else if (pc == 'Scissors'){
-        if(npc == "rock"){results.textContent += 'You have lost the round.';
-        results.appendChild(document.createElement("br"));
-        npcScore +=1;;}
-        else {results.textContent += 'You have won the round.';
-        results.appendChild(document.createElement("br"));
-        playerScore +=1;}
-    }else {console.log("Invalid Choice")}
+    }
 
 
-    determineWinner();
+    determineWinner(resultsContainer);
     displayScore();
 }
 
@@ -52,16 +55,17 @@ function displayScore(){
     document.querySelector('#npcScore').textContent = npcScore;
 }
 
-function determineWinner(){
+function determineWinner(container){
+    let finalResults = document.createElement('div');
     if(playerScore >= 5){
-        results.textContent += 'You have won the match!';
-        results.appendChild(document.createElement("br"));
+        finalResults.textContent = 'You have won the match!';
+        container.appendChild(finalResults);
         npcScore = 0;
         playerScore = 0;
     }
     else if(npcScore >=5 ){
-        results.textContent += 'You have lost the match!\n';
-        results.appendChild(document.createElement("br"));
+        finalResults.textContent = 'You have lost the match!';
+        container.appendChild(finalResults);
         npcScore = 0;
         playerScore = 0;
     }
